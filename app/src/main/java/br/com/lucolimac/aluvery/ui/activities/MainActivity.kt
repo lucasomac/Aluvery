@@ -1,4 +1,4 @@
-package br.com.lucolimac.aluvery
+package br.com.lucolimac.aluvery.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

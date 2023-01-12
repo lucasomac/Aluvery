@@ -13,11 +13,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import br.com.lucolimac.aluvery.domain.entity.PartnerSectionData
 import br.com.lucolimac.aluvery.domain.entity.Product
-import br.com.lucolimac.aluvery.domain.entity.Section
+import br.com.lucolimac.aluvery.domain.entity.ProductSectionData
 import br.com.lucolimac.aluvery.sample.sampleProducts
 import br.com.lucolimac.aluvery.sample.sampleSections
+import br.com.lucolimac.aluvery.sample.sampleShopSections
 import br.com.lucolimac.aluvery.ui.components.CardProductItem
+import br.com.lucolimac.aluvery.ui.components.PartnersSection
 import br.com.lucolimac.aluvery.ui.components.ProductsSection
 import br.com.lucolimac.aluvery.ui.components.SearchTextField
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
@@ -44,7 +47,12 @@ fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
             if (imputedText.isBlank() || imputedText.isEmpty()) {
                 sections.forEach {
                     item {
-                        ProductsSection(section = Section(it.key, it.value))
+                        ProductsSection(productSectionData = ProductSectionData(it.key, it.value))
+                    }
+                }
+                sampleShopSections.forEach {
+                    item {
+                        PartnersSection(partnerSectionData = PartnerSectionData(it.key, it.value))
                     }
                 }
             } else {

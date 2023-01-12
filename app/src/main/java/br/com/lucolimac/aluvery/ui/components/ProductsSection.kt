@@ -1,10 +1,7 @@
 package br.com.lucolimac.aluvery.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -16,17 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import br.com.lucolimac.aluvery.domain.entity.Section
+import br.com.lucolimac.aluvery.domain.entity.ProductSectionData
 import br.com.lucolimac.aluvery.sample.sampleProducts
 import br.com.lucolimac.aluvery.ui.theme.AluveryTheme
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen8
 
 @Composable
-fun ProductsSection(section: Section, modifier: Modifier = Modifier) {
-    Column(modifier) {
+fun ProductsSection(productSectionData: ProductSectionData, modifier: Modifier = Modifier) {
+    Section(title = {
         Text(
-            text = section.title,
+            text = productSectionData.title,
             Modifier.padding(
                 start = Dimen16, end = Dimen16
             ),
@@ -34,6 +31,7 @@ fun ProductsSection(section: Section, modifier: Modifier = Modifier) {
             fontWeight = FontWeight.W400,
             lineHeight = 24.sp,
         )
+    }, content = {
         LazyRow(
             modifier = Modifier
                 .padding(top = Dimen8)
@@ -41,11 +39,11 @@ fun ProductsSection(section: Section, modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(Dimen16),
             contentPadding = PaddingValues(horizontal = Dimen16)
         ) {
-            items(section.products) {
+            items(productSectionData.products) {
                 ProductItem(product = it)
             }
         }
-    }
+    }, modifier)
 }
 
 @Preview(showBackground = true)
@@ -53,7 +51,12 @@ fun ProductsSection(section: Section, modifier: Modifier = Modifier) {
 private fun ProductsSectionPreview() {
     AluveryTheme {
         Surface {
-            ProductsSection(section = Section("Section", sampleProducts))
+            ProductsSection(
+                productSectionData = ProductSectionData(
+                    "ProductSectionData",
+                    sampleProducts
+                )
+            )
         }
     }
 }
