@@ -3,33 +3,31 @@ package br.com.lucolimac.aluvery.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import br.com.lucolimac.aluvery.R
 import br.com.lucolimac.aluvery.domain.entity.Product
 import br.com.lucolimac.aluvery.domain.entity.Section
+import br.com.lucolimac.aluvery.sample.sampleSections
 import br.com.lucolimac.aluvery.ui.theme.AluveryTheme
-import java.math.BigDecimal
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 
 @Composable
-fun AluveryApp(sections: List<Section>) {
+fun AluveryApp(sections: Map<String, List<Product>>) {
     AluveryTheme {
         Surface() {
             LazyColumn(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(horizontal = Dimen16),
+                verticalArrangement = Arrangement.spacedBy(Dimen16),
                 contentPadding = PaddingValues(
-                    vertical = 16.dp
+                    vertical = Dimen16
                 ),
             ) {
                 item {
                     sections.forEach {
-                        ProductsSection(section = it)
+                        ProductsSection(section = Section(it.key, it.value))
                     }
                 }
             }
@@ -40,27 +38,5 @@ fun AluveryApp(sections: List<Section>) {
 @Preview(showBackground = true)
 @Composable
 fun AluveryAppPreview() {
-    AluveryApp(
-        listOf(
-            Section(
-                "Promoções", listOf(
-                    Product("Hamburger", BigDecimal(14.50)),
-                    Product("Pizza", BigDecimal(59.34), R.drawable.pizza),
-                    Product("Fries", BigDecimal(39.90), R.drawable.fries),
-                )
-            ), Section(
-                "Doces", listOf(
-                    Product("Hamburger", BigDecimal(14.50)),
-                    Product("Pizza", BigDecimal(59.34), R.drawable.pizza),
-                    Product("Fries", BigDecimal(39.90), R.drawable.fries),
-                )
-            ), Section(
-                "Salgados", listOf(
-                    Product("Hamburger", BigDecimal(14.50)),
-                    Product("Pizza", BigDecimal(59.34), R.drawable.pizza),
-                    Product("Fries", BigDecimal(39.90), R.drawable.fries),
-                )
-            )
-        )
-    )
+    AluveryApp(sampleSections)
 }

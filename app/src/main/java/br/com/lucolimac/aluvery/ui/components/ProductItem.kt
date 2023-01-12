@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,24 +28,27 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.lucolimac.aluvery.R
 import br.com.lucolimac.aluvery.domain.entity.Product
-import br.com.lucolimac.aluvery.ui.theme.Dimen100
-import br.com.lucolimac.aluvery.ui.theme.Purple500
-import br.com.lucolimac.aluvery.ui.theme.Teal200
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen100
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen200
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen250
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen300
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen8
 import java.math.BigDecimal
 
 @Composable
 fun ProductItem(product: Product) {
     Surface(
-        shape = RoundedCornerShape(16.dp),
-        shadowElevation = 8.dp,
+        shape = RoundedCornerShape(Dimen16),
+        shadowElevation = Dimen8,
     ) {
         Column(
             Modifier
-                .heightIn(250.dp, 300.dp)
-                .width(200.dp)
+                .heightIn(Dimen250, Dimen300)
+                .width(Dimen200)
         ) {
             val imageSize = Dimen100
             Box(
@@ -54,13 +58,14 @@ fun ProductItem(product: Product) {
                     .background(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
-                                Purple500, Teal200
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary
                             )
                         )
                     )
             ) {
                 Image(
-                    painter = painterResource(id = product.image),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "Imagem do produto",
                     modifier = Modifier
                         .offset(y = imageSize / 2)
@@ -73,7 +78,7 @@ fun ProductItem(product: Product) {
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(Dimen16)
             ) {
                 Text(
                     text = product.name,
@@ -90,7 +95,7 @@ fun ProductItem(product: Product) {
                     fontWeight = FontWeight.W400,
                     lineHeight = 16.sp,
                     fontFamily = FontFamily.SansSerif,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = Dimen8)
                 )
             }
         }
@@ -100,5 +105,5 @@ fun ProductItem(product: Product) {
 @Preview(showBackground = true)
 @Composable
 private fun ProductItemPreview() {
-    ProductItem(Product("Hamburguer", BigDecimal(14.50)))
+    ProductItem(Product("Hamburguer", BigDecimal(14.50), "https://picsum.photos/200/300"))
 }
