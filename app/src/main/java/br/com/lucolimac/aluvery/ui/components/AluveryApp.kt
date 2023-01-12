@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +14,7 @@ import br.com.lucolimac.aluvery.domain.entity.Section
 import br.com.lucolimac.aluvery.sample.sampleSections
 import br.com.lucolimac.aluvery.ui.theme.AluveryTheme
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
+import java.util.stream.Collectors
 
 @Composable
 fun AluveryApp(sections: Map<String, List<Product>>) {
@@ -21,12 +23,10 @@ fun AluveryApp(sections: Map<String, List<Product>>) {
             LazyColumn(
                 modifier = Modifier.padding(horizontal = Dimen16),
                 verticalArrangement = Arrangement.spacedBy(Dimen16),
-                contentPadding = PaddingValues(
-                    vertical = Dimen16
-                ),
+                contentPadding = PaddingValues(vertical = Dimen16),
             ) {
-                item {
-                    sections.forEach {
+                sections.forEach {
+                    item {
                         ProductsSection(section = Section(it.key, it.value))
                     }
                 }
@@ -34,6 +34,7 @@ fun AluveryApp(sections: Map<String, List<Product>>) {
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

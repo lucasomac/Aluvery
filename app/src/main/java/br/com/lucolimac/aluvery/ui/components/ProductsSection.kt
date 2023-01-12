@@ -2,6 +2,7 @@ package br.com.lucolimac.aluvery.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,23 +27,24 @@ fun ProductsSection(section: Section) {
     Column {
         Text(
             text = section.title,
+            Modifier.padding(
+                start = Dimen16,
+                end = Dimen16
+            ),
             fontSize = 20.sp,
             fontWeight = FontWeight.W400,
             lineHeight = 24.sp,
         )
-        Row {
-            Spacer(modifier = Modifier)
-            LazyRow(
-                modifier = Modifier
-                    .padding(top = Dimen8)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Dimen16),
-            ) {
-                items(section.products) {
-                    ProductItem(product = it)
-                }
+        LazyRow(
+            modifier = Modifier
+                .padding(top = Dimen8)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Dimen16),
+            contentPadding = PaddingValues(horizontal = Dimen16)
+        ) {
+            items(section.products) {
+                ProductItem(product = it)
             }
-            Spacer(modifier = Modifier)
         }
     }
 }

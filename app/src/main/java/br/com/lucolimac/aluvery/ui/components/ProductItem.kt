@@ -37,6 +37,7 @@ import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen200
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen250
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen300
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen8
+import coil.compose.AsyncImage
 import java.math.BigDecimal
 
 @Composable
@@ -64,8 +65,9 @@ fun ProductItem(product: Product) {
                         )
                     )
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.placeholder),
+                AsyncImage(
+                    model = product.image,
+                    placeholder = painterResource(id = R.drawable.placeholder),
                     contentDescription = "Imagem do produto",
                     modifier = Modifier
                         .offset(y = imageSize / 2)
