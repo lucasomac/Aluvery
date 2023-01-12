@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -23,35 +25,56 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.lucolimac.aluvery.domain.entity.Product
 import br.com.lucolimac.aluvery.domain.entity.Section
+import br.com.lucolimac.aluvery.sample.sampleProducts
 import br.com.lucolimac.aluvery.sample.sampleSections
+import br.com.lucolimac.aluvery.ui.components.CardProductItem
 import br.com.lucolimac.aluvery.ui.components.ProductsSection
-import br.com.lucolimac.aluvery.ui.theme.Dimen
-import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen8
+import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(sections: Map<String, List<Product>>) {
+fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
     Column {
-        var imputedText by remember { mutableStateOf("") }
-        OutlinedTextField(value = imputedText,
-            leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) },
+        var imputedText by remember { mutableStateOf(searchText) }
+        val searchedProducts = remember(imputedText) {
+            if (imputedText.isNotEmpty()) sampleProducts.filter {
+                it.name.contains(
+                    imputedText, true
+                ) || it.description?.contains(imputedText, true) ?: false
+            }
+            else emptyList()
+        }
+        OutlinedTextField(
+            value = imputedText,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search, contentDescription = "ícone de lupa"
+                )
+            },
             modifier = Modifier
-                .padding(Dimen8)
+                .padding(Dimen16)
                 .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             label = { Text(text = "Produto") },
-            placeholder = { Text(text = "O que você está prucurando?") },
+            placeholder = { Text(text = "O que você procura?") },
             onValueChange = {
                 imputedText = it
-            })
+            },
+            shape = RoundedCornerShape(50)
+        )
         LazyColumn(
-            modifier = Modifier.padding(horizontal = Dimen.Dimen16),
-            verticalArrangement = Arrangement.spacedBy(Dimen.Dimen16),
-            contentPadding = PaddingValues(vertical = Dimen.Dimen16),
+            verticalArrangement = Arrangement.spacedBy(Dimen16),
+            contentPadding = PaddingValues(bottom = Dimen16),
         ) {
-            sections.forEach {
-                item {
-                    ProductsSection(section = Section(it.key, it.value))
+            if (imputedText.isBlank() || imputedText.isEmpty()) {
+                sections.forEach {
+                    item {
+                        ProductsSection(section = Section(it.key, it.value))
+                    }
+                }
+            } else {
+                items(searchedProducts) {
+                    CardProductItem(product = it, Modifier.padding(horizontal = Dimen16))
                 }
             }
         }

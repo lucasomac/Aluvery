@@ -23,13 +23,12 @@ import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen8
 
 @Composable
-fun ProductsSection(section: Section) {
-    Column {
+fun ProductsSection(section: Section, modifier: Modifier = Modifier) {
+    Column(modifier) {
         Text(
             text = section.title,
             Modifier.padding(
-                start = Dimen16,
-                end = Dimen16
+                start = Dimen16, end = Dimen16
             ),
             fontSize = 20.sp,
             fontWeight = FontWeight.W400,
