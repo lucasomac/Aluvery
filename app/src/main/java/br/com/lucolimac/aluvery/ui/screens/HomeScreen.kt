@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,9 +22,9 @@ import br.com.lucolimac.aluvery.sample.sampleDrinks
 import br.com.lucolimac.aluvery.sample.sampleProducts
 import br.com.lucolimac.aluvery.sample.sampleSections
 import br.com.lucolimac.aluvery.sample.sampleShopSections
-import br.com.lucolimac.aluvery.ui.components.CardProductItem
-import br.com.lucolimac.aluvery.ui.components.PartnersSection
-import br.com.lucolimac.aluvery.ui.components.ProductsSection
+import br.com.lucolimac.aluvery.ui.components.product.CardProductItem
+import br.com.lucolimac.aluvery.ui.components.section.PartnersSection
+import br.com.lucolimac.aluvery.ui.components.section.ProductsSection
 import br.com.lucolimac.aluvery.ui.components.SearchTextField
 import br.com.lucolimac.aluvery.ui.states.HomeScreenUiState
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
@@ -36,7 +37,7 @@ fun HomeScreen(products: List<Product>) {
         "Doces" to sampleCandies,
         "Bebidas" to sampleDrinks
     )
-    var text by remember { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") }
     fun containsInNameOrDescription(): (Product) -> Boolean = {
         it.name.contains(text, true) || it.description?.contains(
             text,

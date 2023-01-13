@@ -1,4 +1,4 @@
-package br.com.lucolimac.aluvery.ui.components
+package br.com.lucolimac.aluvery.ui.components.section
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import br.com.lucolimac.aluvery.domain.entity.ProductSectionData
 import br.com.lucolimac.aluvery.sample.sampleProducts
+import br.com.lucolimac.aluvery.ui.components.product.ProductItem
 import br.com.lucolimac.aluvery.ui.theme.AluveryTheme
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen8

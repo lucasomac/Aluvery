@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -39,6 +40,14 @@ import java.text.DecimalFormat
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
+
+    var url by rememberSaveable { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
+    var price by rememberSaveable { mutableStateOf("") }
+    var description by rememberSaveable { mutableStateOf("") }
+    val formatter = remember {
+        DecimalFormat("#.##")
+    }
     Column(
         Modifier
             .fillMaxSize()
@@ -50,7 +59,6 @@ fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
             text = "Criando o produto", Modifier.fillMaxWidth(),
             fontSize = 28.sp,
         )
-        var url by remember { mutableStateOf("") }
         if (url.isNotBlank()) {
             AsyncImage(
                 model = url,
@@ -75,7 +83,6 @@ fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
                 keyboardType = KeyboardType.Uri, imeAction = ImeAction.Next
             ),
         )
-        var name by remember { mutableStateOf("") }
         TextField(value = name, onValueChange = {
             name = it
         }, Modifier.fillMaxWidth(), label = {
@@ -86,10 +93,6 @@ fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
             capitalization = KeyboardCapitalization.Sentences
         )
         )
-        var price by remember { mutableStateOf("") }
-        val formatter = remember {
-            DecimalFormat("#.##")
-        }
         TextField(
             value = price,
             onValueChange = {
@@ -109,17 +112,20 @@ fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
                 keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next
             ),
         )
-        var description by remember { mutableStateOf("") }
-        TextField(value = description, onValueChange = {
-            description = it
-        },
+        TextField(
+            value = description,
+            onValueChange = {
+                description = it
+            },
             Modifier
                 .fillMaxWidth()
-                .heightIn(Dimen100), label = {
-            Text(text = "Descrição")
-        }, keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.Sentences,
-        )
+                .heightIn(Dimen100),
+            label = {
+                Text(text = "Descrição")
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.Sentences,
+            ),
         )
         Button(
             onClick = {

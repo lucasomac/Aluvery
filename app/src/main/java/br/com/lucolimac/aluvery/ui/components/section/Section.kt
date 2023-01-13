@@ -1,4 +1,4 @@
-package br.com.lucolimac.aluvery.ui.components
+package br.com.lucolimac.aluvery.ui.components.section
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

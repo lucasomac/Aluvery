@@ -1,4 +1,4 @@
-package br.com.lucolimac.aluvery.ui.components
+package br.com.lucolimac.aluvery.ui.components.section
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import br.com.lucolimac.aluvery.domain.entity.PartnerSectionData
+import br.com.lucolimac.aluvery.ui.components.Partner
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 
 @Composable

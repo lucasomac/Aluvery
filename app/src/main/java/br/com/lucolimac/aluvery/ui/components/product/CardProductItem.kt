@@ -1,6 +1,7 @@
-package br.com.lucolimac.aluvery.ui.components
+package br.com.lucolimac.aluvery.ui.components.product
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -31,12 +37,17 @@ import coil.compose.AsyncImage
 
 @Composable
 fun CardProductItem(
-    product: Product, modifier: Modifier = Modifier, elevation: Dp = Dimen4
+    product: Product,
+    modifier: Modifier = Modifier,
+    elevation: Dp = Dimen4,
+    isExpanded: Boolean = false
 ) {
+    var expanded by rememberSaveable { mutableStateOf(isExpanded) }
     Card(
         modifier
             .fillMaxWidth()
-            .heightIn(Dimen150),
+            .heightIn(Dimen150)
+            .clickable { expanded = !expanded },
         elevation = CardDefaults.cardElevation(elevation)
     ) {
         Column {
@@ -62,13 +73,15 @@ fun CardProductItem(
                     text = product.price.toBrazilianCurrency()
                 )
             }
-            product.description?.let {
-                Text(
-                    text = it,
-                    Modifier.padding(Dimen16),
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
+            if (expanded) {
+                product.description?.let {
+                    Text(
+                        text = it,
+                        Modifier.padding(Dimen16),
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
     }
