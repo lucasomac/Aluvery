@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.lucolimac.aluvery.sample.sampleSections
 import br.com.lucolimac.aluvery.ui.screens.HomeScreen
+import br.com.lucolimac.aluvery.ui.states.HomeScreenUiState
 import br.com.lucolimac.aluvery.ui.theme.AluveryTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +39,8 @@ fun AluveryApp(
 
 @Preview(showBackground = true)
 @Composable
-fun AppPreview() {
-    AluveryApp { HomeScreen(sections = sampleSections) }
+fun AluveryAppPreview() {
+    AluveryApp {
+        HomeScreen(HomeScreenUiState(sections = sampleSections))
+    }
 }

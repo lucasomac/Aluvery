@@ -1,26 +1,14 @@
 package br.com.lucolimac.aluvery.ui.states
 
-import androidx.compose.runtime.mutableStateOf
-import br.com.lucolimac.aluvery.sample.sampleProducts
+import br.com.lucolimac.aluvery.domain.entity.Product
 
-class HomeScreenUiState(searchText: String = "") {
-    var text = mutableStateOf(searchText)
-        private set
-    val searchedProducts
-        get() = if (text.value.isNotBlank()) {
-            sampleProducts.filter {
-                it.name.contains(text.value, true) || it.description?.contains(
-                    text.value,
-                    ignoreCase = true,
-                ) ?: false
-            }
-        } else emptyList()
-    val onSearchChange: (String) -> Unit = {
-        text.value = it
-    }
-
+class HomeScreenUiState(
+    val sections: Map<String, List<Product>> = emptyMap(),
+    val searchedProducts: List<Product> = emptyList(),
+    var searchText: String = "",
+    val onSearchChange: (String) -> Unit = {}
+) {
     fun isShowSection(): Boolean {
-        return text.value.isBlank() || text.value.isEmpty()
+        return searchText.isBlank() || searchText.isEmpty()
     }
-
 }

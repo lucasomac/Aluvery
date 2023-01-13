@@ -20,20 +20,19 @@ import br.com.lucolimac.aluvery.ui.components.PartnersSection
 import br.com.lucolimac.aluvery.ui.components.ProductsSection
 import br.com.lucolimac.aluvery.ui.components.SearchTextField
 import br.com.lucolimac.aluvery.ui.states.HomeScreenUiState
+import br.com.lucolimac.aluvery.ui.theme.AluveryTheme
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 
 @Composable
 fun HomeScreen(
-    sections: Map<String, List<Product>>, state: HomeScreenUiState = HomeScreenUiState()
+    state: HomeScreenUiState = HomeScreenUiState()
 ) {
     Column {
-        val imputedText = remember {
-            state.text.value
+        val imputedText = state.searchText
+        val filteredProducts = state.searchedProducts
+        val sections = remember {
+            state.sections
         }
-        val filteredProducts = remember {
-            state.searchedProducts
-        }
-
         SearchTextField(imputedText, doSearchOnTextChange = state.onSearchChange)
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(Dimen16),
@@ -63,5 +62,15 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(sampleSections)
+    HomeScreen(HomeScreenUiState(sections = sampleSections))
+}
+
+@Preview
+@Composable
+fun HomeScreenWithSearchTextPreview() {
+    HomeScreen(
+        state = HomeScreenUiState(
+            searchText = "a", sections = sampleSections
+        ),
+    )
 }
