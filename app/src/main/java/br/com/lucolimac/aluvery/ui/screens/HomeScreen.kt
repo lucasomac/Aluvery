@@ -7,44 +7,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.lucolimac.aluvery.domain.entity.PartnerSectionData
 import br.com.lucolimac.aluvery.domain.entity.Product
 import br.com.lucolimac.aluvery.domain.entity.ProductSectionData
-import br.com.lucolimac.aluvery.sample.sampleProducts
 import br.com.lucolimac.aluvery.sample.sampleSections
 import br.com.lucolimac.aluvery.sample.sampleShopSections
 import br.com.lucolimac.aluvery.ui.components.CardProductItem
 import br.com.lucolimac.aluvery.ui.components.PartnersSection
 import br.com.lucolimac.aluvery.ui.components.ProductsSection
 import br.com.lucolimac.aluvery.ui.components.SearchTextField
+import br.com.lucolimac.aluvery.ui.states.HomeScreenUiState
 import br.com.lucolimac.aluvery.ui.theme.Dimen.Dimen16
 
 @Composable
-fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
+fun HomeScreen(
+    sections: Map<String, List<Product>>, state: HomeScreenUiState = HomeScreenUiState()
+) {
     Column {
-        var imputedText by remember { mutableStateOf(searchText) }
-        SearchTextField(imputedText, doSearchOnTextChange = { imputedText = it })
-
-        val searchedProducts = remember(imputedText) {
-            if (imputedText.isNotEmpty()) sampleProducts.filter {
-                it.name.contains(
-                    imputedText, true
-                ) || it.description?.contains(imputedText, true) ?: false
-            }
-            else emptyList()
+        val imputedText = remember {
+            state.text.value
+        }
+        val filteredProducts = remember {
+            state.searchedProducts
         }
 
+        SearchTextField(imputedText, doSearchOnTextChange = state.onSearchChange)
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(Dimen16),
             contentPadding = PaddingValues(bottom = Dimen16),
         ) {
-            if (imputedText.isBlank() || imputedText.isEmpty()) {
+            if (state.isShowSection()) {
                 sections.forEach {
                     item {
                         ProductsSection(productSectionData = ProductSectionData(it.key, it.value))
@@ -56,7 +51,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
                     }
                 }
             } else {
-                items(searchedProducts) {
+                items(filteredProducts) {
                     CardProductItem(product = it, Modifier.padding(horizontal = Dimen16))
                 }
             }

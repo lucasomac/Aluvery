@@ -38,7 +38,7 @@ import java.text.DecimalFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductFormScreen() {
+fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
     Column(
         Modifier
             .fillMaxSize()
@@ -126,6 +126,7 @@ fun ProductFormScreen() {
                 val product = Product(
                     name = name, image = url, price = BigDecimal(price), description = description
                 )
+                onSaveClick(product)
             }, Modifier.fillMaxWidth()
         ) {
             Text(text = "Salvar")
