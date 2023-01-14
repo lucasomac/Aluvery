@@ -24,8 +24,8 @@ import br.com.lucolimac.aluvery.ui.viewmodel.HomeScreenViewModel
 
 @Composable
 fun HomeScreen(viewModel: HomeScreenViewModel) {
-
     val state = viewModel.uiState
+    viewModel.findProducts()
     HomeScreen(state)
 }
 

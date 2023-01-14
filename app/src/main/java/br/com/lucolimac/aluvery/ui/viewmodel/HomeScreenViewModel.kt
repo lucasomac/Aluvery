@@ -39,4 +39,15 @@ class HomeScreenViewModel : ViewModel() {
             )
         } else emptyList()
     }
+
+    fun findProducts() {
+        uiState = uiState.copy(
+            sections = mapOf(
+                "Todos os produtos" to dao.products() + sampleProducts.random(),
+                "Promoções" to sampleDrinks + sampleCandies,
+                "Doces" to sampleCandies,
+                "Bebidas" to sampleDrinks
+            )
+        )
+    }
 }
