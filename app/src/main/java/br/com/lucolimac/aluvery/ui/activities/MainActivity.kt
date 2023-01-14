@@ -4,12 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import br.com.lucolimac.aluvery.dao.ProductDao
 import br.com.lucolimac.aluvery.ui.components.AluveryApp
 import br.com.lucolimac.aluvery.ui.screens.HomeScreen
+import br.com.lucolimac.aluvery.ui.viewmodel.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
-    private val dao = ProductDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -21,7 +22,8 @@ class MainActivity : ComponentActivity() {
                 )
             }) {
                 val products = dao.products()
-                HomeScreen(products)
+                val viewModel by viewModels<HomeScreenViewModel>()
+                HomeScreen(viewModel)
             }
         }
     }
