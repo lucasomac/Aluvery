@@ -21,7 +21,6 @@ class MainActivity : ComponentActivity() {
                     )
                 )
             }) {
-                val products = dao.products()
                 val viewModel by viewModels<HomeScreenViewModel>()
                 HomeScreen(viewModel)
             }
